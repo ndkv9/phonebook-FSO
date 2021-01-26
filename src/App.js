@@ -11,11 +11,20 @@ const App = () => {
 
 	const handleSubmit = e => {
 		e.preventDefault()
-		const personObj = {
-			name: newName,
+
+		const names = persons.map(p => p.name)
+		console.log('names', names)
+		if (names.includes(newName)) {
+			alert(`${newName} is already added to phonebook`)
+			setNewName('')
+		} else {
+			const personObj = {
+				name: newName,
+			}
+
+			setPersons(persons.concat(personObj))
+			setNewName('')
 		}
-		setPersons(persons.concat(personObj))
-		setNewName('')
 	}
 
 	return (
