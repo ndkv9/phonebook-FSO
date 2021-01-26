@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Person from './components/Person'
 
 const App = () => {
 	const [persons, setPersons] = useState([{ name: 'Arto Hellas' }])
@@ -10,7 +11,10 @@ const App = () => {
 
 	const handleSubmit = e => {
 		e.preventDefault()
-		setPersons(persons.concat(newName))
+		const personObj = {
+			name: newName,
+		}
+		setPersons(persons.concat(personObj))
 		setNewName('')
 	}
 
@@ -26,6 +30,9 @@ const App = () => {
 				</div>
 			</form>
 			<h2>Numbers</h2>
+			{persons.map(p => (
+				<Person key={p.name} name={p.name} />
+			))}
 		</div>
 	)
 }
