@@ -45,6 +45,10 @@ const App = () => {
 		}
 	}
 
+	const filteredNames = persons.filter(p =>
+		p.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+	)
+
 	return (
 		<div>
 			<h2>Phonebook</h2>
@@ -64,7 +68,8 @@ const App = () => {
 				</div>
 			</form>
 			<h2>Numbers</h2>
-			{persons.map(p => (
+			{!filteredNames.length && <h4>No result!</h4>}
+			{filteredNames.map(p => (
 				<Person key={p.name} name={p.name} number={p.number} />
 			))}
 		</div>
