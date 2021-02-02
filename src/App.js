@@ -11,8 +11,8 @@ const App = () => {
 	const [filter, setFilter] = useState('')
 
 	useEffect(() => {
-		axios.get('http://localhost:3001/persons').then(res => setPersons(res.data))
-	})
+		axios.get('http://localhost:5000/persons').then(res => setPersons(res.data))
+	}, [])
 	const handleNameChange = e => {
 		setNewName(e.target.value)
 	}
