@@ -49,6 +49,14 @@ const App = () => {
 		}
 	}
 
+	const handleRemove = person => {
+		const result = window.confirm(`Remove ${person.name} ?`)
+		if (result) {
+			personService.remove(person.id)
+			setPersons(persons.filter(p => p.id !== person.id))
+		}
+	}
+
 	const filteredNames = persons.filter(p =>
 		p.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
 	)
@@ -73,7 +81,12 @@ const App = () => {
 
 			{!filteredNames.length && <h4>No result!</h4>}
 			{filteredNames.map(p => (
-				<Person key={p.name} name={p.name} number={p.number} />
+				<Person
+					key={p.name}
+					name={p.name}
+					number={p.number}
+					remove={() => handleRemove(p)}
+				/>
 			))}
 		</div>
 	)
