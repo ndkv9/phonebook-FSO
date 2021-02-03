@@ -10,7 +10,7 @@ const App = () => {
 	const [newName, setNewName] = useState('')
 	const [newNumber, setNewNumber] = useState('')
 	const [filter, setFilter] = useState('')
-	const [noti, setNoti] = useState(null)
+	const [noti, setNoti] = useState({ message: null, error: false })
 
 	useEffect(() => {
 		personService.getAll().then(initialPersons => setPersons(initialPersons))
@@ -56,6 +56,16 @@ const App = () => {
 							)
 						)
 					)
+					.catch(err => {
+						setNoti({
+							message: `${newName}'s information has already been removed from server`,
+							err: true,
+						})
+						setTimeout(() => {
+							setNoti({ message: null, err: false })
+						}, 3000)
+						setPersons(persons.filter(p => p.id !== personToUpdate.id))
+					})
 			} else {
 				setNewName('')
 				setNewNumber('')
@@ -70,9 +80,9 @@ const App = () => {
 				setPersons(persons.concat(returnedPerson))
 				setNewName('')
 				setNewNumber('')
-				setNoti(`Added ${newName}`)
+				setNoti({ ...noti, message: `Added ${newName}` })
 				setTimeout(() => {
-					setNoti(null)
+					setNoti({ message: null, err: false })
 				}, 3000)
 			})
 		}
@@ -83,6 +93,10 @@ const App = () => {
 		if (result) {
 			personService.remove(person.id)
 			setPersons(persons.filter(p => p.id !== person.id))
+			setNoti({ ...noti, message: `Removed ${person.name}` })
+			setTimeout(() => {
+				setNoti({ message: null, err: false })
+			}, 3000)
 		}
 	}
 
@@ -94,7 +108,7 @@ const App = () => {
 		<div>
 			<h2>Phonebook</h2>
 
-			<Noti message={noti} />
+			<Noti noti={noti} />
 
 			<Filter filter={filter} handleFilterChange={handleFilterChange} />
 
