@@ -70,6 +70,10 @@ const App = () => {
 				setPersons(persons.concat(returnedPerson))
 				setNewName('')
 				setNewNumber('')
+				setNoti(`Added ${newName}`)
+				setTimeout(() => {
+					setNoti(null)
+				}, 3000)
 			})
 		}
 	}
