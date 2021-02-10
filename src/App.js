@@ -76,15 +76,25 @@ const App = () => {
 				number: newNumber,
 			}
 
-			personService.create(personObj).then(returnedPerson => {
-				setPersons(persons.concat(returnedPerson))
-				setNewName('')
-				setNewNumber('')
-				setNoti({ ...noti, message: `Added ${newName}` })
-				setTimeout(() => {
-					setNoti({ message: null, err: false })
-				}, 3000)
-			})
+			personService
+				.create(personObj)
+				.then(returnedPerson => {
+					setPersons(persons.concat(returnedPerson))
+					setNewName('')
+					setNewNumber('')
+					setNoti({ ...noti, message: `Added ${newName}` })
+					setTimeout(() => {
+						setNoti({ message: null, err: false })
+					}, 3000)
+				})
+				.catch(err => {
+					setNoti({ message: err.response.data.error, err: true })
+					setTimeout(() => {
+						setNoti({ message: null, err: false })
+					}, 3000)
+					setNewName('')
+					setNewNumber('')
+				})
 		}
 	}
 
