@@ -38,9 +38,6 @@ const App = () => {
 				`${newName} is already added to phonebook, replace with a new number?`
 			)
 			if (result) {
-				setNewName('')
-				setNewNumber('')
-
 				const personToUpdate = persons.find(p => p.name === newName)
 				const updatedPerson = {
 					...personToUpdate,
@@ -66,6 +63,9 @@ const App = () => {
 						}, 3000)
 						setPersons(persons.filter(p => p.id !== personToUpdate.id))
 					})
+
+				setNewName('')
+				setNewNumber('')
 			} else {
 				setNewName('')
 				setNewNumber('')
